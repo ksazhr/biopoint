@@ -250,11 +250,13 @@ export default function App() {
     if (!window.confirm('Apakah Anda yakin ingin menghapus titik biopori ini?')) return;
     
     try {
-      const response = await fetch(`/api/biopori/${id}`, {
+      const response = await fetch('/api/biopori', {
         method: 'DELETE',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': 'Bearer admin-secret-123'
-        }
+        },
+        body: JSON.stringify({ id })
       });
       if (response.ok) {
         console.log('Successfully deleted point:', id);

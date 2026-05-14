@@ -42,7 +42,12 @@ export default async function handler(req: any, res: any) {
 
     if (req.method === 'GET') {
       const biopori = await collection.find({}).toArray();
-      return res.status(200).json(biopori);
+      // Map _id to id so the frontend can use point.id consistently
+      const mapped = biopori.map((doc: any) => ({
+        ...doc,
+        id: doc._id.toString(),
+      }));
+      return res.status(200).json(mapped);
     } else if (req.method === 'POST') {
       const authHeader = req.headers.authorization;
       if (authHeader !== "Bearer admin-secret-123") {
