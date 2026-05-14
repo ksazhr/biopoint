@@ -95,7 +95,7 @@ function LocateButton({ userLocation }: { userLocation: [number, number] | null 
           alert('Mencari lokasi Anda...');
         }
       }}
-      className={`absolute bottom-6 right-6 z-[1000] p-4 rounded-2xl shadow-xl transition-all ${userLocation ? 'bg-white text-blue-600 hover:bg-blue-50 border border-blue-100' : 'bg-slate-100 text-slate-400 cursor-not-allowed'}`}
+      className={`absolute bottom-20 sm:bottom-6 right-4 sm:right-6 z-[1000] p-3 sm:p-4 rounded-2xl shadow-xl transition-all ${userLocation ? 'bg-white text-blue-600 hover:bg-blue-50 border border-blue-100' : 'bg-slate-100 text-slate-400 cursor-not-allowed'}`}
       title="Pusatkan ke Lokasi Saya"
     >
       <LocateFixed size={24} />
@@ -500,20 +500,20 @@ export default function App() {
               </MapContainer>
 
               {/* Map Overlays */}
-              <div className="absolute bottom-5 left-6 hidden sm:block bg-white/90 backdrop-blur-md p-5 rounded-3xl shadow-2xl border border-white shrink-0 z-[1000] w-52">
-                <h3 className="text-xs font-bold text-slate-800 uppercase tracking-widest mb-4">Keterangan Peta</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-200"></div>
-                    <span className="text-xs font-medium text-slate-600">Lubang Aktif</span>
+              <div className="absolute bottom-20 sm:bottom-5 left-3 sm:left-6 bg-white/90 backdrop-blur-md p-3 sm:p-5 rounded-2xl sm:rounded-3xl shadow-2xl border border-white shrink-0 z-[1000] w-40 sm:w-52">
+                <h3 className="text-[10px] sm:text-xs font-bold text-slate-800 uppercase tracking-widest mb-2 sm:mb-4">Keterangan Peta</h3>
+                <div className="space-y-2 sm:space-y-3">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-emerald-500 shadow-sm shadow-emerald-200 shrink-0"></div>
+                    <span className="text-[10px] sm:text-xs font-medium text-slate-600">Lubang Aktif</span>
                   </div>
-                  <div className="flex items-center gap-3 border-t border-slate-100 pt-3">
-                    <div className="w-3.5 h-3.5 rounded-full bg-white border border-slate-200 shadow-sm shadow-black-200"></div>
-                    <span className="text-xs font-medium text-slate-600">Jalan</span>
+                  <div className="flex items-center gap-2 sm:gap-3 border-t border-slate-100 pt-2 sm:pt-3">
+                    <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white border border-slate-200 shadow-sm shrink-0"></div>
+                    <span className="text-[10px] sm:text-xs font-medium text-slate-600">Jalan</span>
                   </div>
-                  <div className="flex items-center gap-3 border-t border-slate-100 pt-3">
-                    <div className="w-3.5 h-3.5 rounded-full bg-blue-300 shadow-sm shadow-blue-200"></div>
-                    <span className="text-xs font-medium text-slate-600">Sungai</span>
+                  <div className="flex items-center gap-2 sm:gap-3 border-t border-slate-100 pt-2 sm:pt-3">
+                    <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-blue-300 shadow-sm shadow-blue-200 shrink-0"></div>
+                    <span className="text-[10px] sm:text-xs font-medium text-slate-600">Sungai</span>
                   </div>
                 </div>
                 {isAdmin && (
