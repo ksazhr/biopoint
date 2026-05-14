@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Cara Menjalankan Proyek Biopori di Laptop
 
-# Run and deploy your AI Studio app
+Proyek ini dibangun menggunakan **Node.js (Express + React)**.
 
-This contains everything you need to run your app locally.
+## Persiapan
+1. **Install Node.js**: Pastikan laptopmu sudah terpasang Node.js (download di nodejs.org).
+2. **Ekstrak File**: Masukkan semua file codingan ke dalam satu folder.
 
-View your app in AI Studio: https://ai.studio/apps/bfae7ed4-487b-44c3-b444-4e39a624f7f4
+## Cara Menjalankan
+1. Buka **Terminal** atau **CMD** di dalam folder tersebut.
+2. Jalankan perintah untuk menginstall library (wajib):
+   ```bash
+   npm install
+   ```
+3. Jalankan aplikasi:
+   ```bash
+   npm run dev
+   ```
+4. Buka browser dan akses: `http://localhost:3000`
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Di Mana Datanya Disimpan?
+Semua titik biopori yang kamu buat akan tersimpan di file otomatis bernama `biopori_data.json` di folder proyekmu. Jangan menghapus file ini jika ingin datanya tetap ada.

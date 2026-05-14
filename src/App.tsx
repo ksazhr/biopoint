@@ -135,7 +135,10 @@ function MapPersist() {
 
 export default function App() {
   const [points, setPoints] = useState<BioporiPoint[]>([]);
-  const [view, setView] = useState<'map' | 'list'>('map');
+  const [view, setView] = useState<'map' | 'list'>(() => {
+    const saved = localStorage.getItem('si_biopori_view');
+    return (saved as 'map' | 'list') || 'map';
+  });
   const [isAdmin, setIsAdmin] = useState(() => {
     // Cek apakah sebelumnya sudah login di laptop ini
     return localStorage.getItem('si_biopori_admin') === 'true';
@@ -288,6 +291,10 @@ export default function App() {
       : `${(distance/1000).toFixed(1)} km`;
   };
 
+  useEffect(() => {
+    localStorage.setItem('si_biopori_view', view);
+  }, [view]);
+
   return (
     <div className="h-screen w-full bg-emerald-50 flex flex-col font-sans overflow-hidden">
       
@@ -347,7 +354,7 @@ export default function App() {
         
         {/* Sidebar */}
         <AnimatePresence>
-          {(view === 'list' || isAdmin) && (
+          {(view === 'list') && (
             <motion.aside 
               initial={{ x: -320 }}
               animate={{ x: 0 }}
