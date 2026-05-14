@@ -1,28 +1,49 @@
 import { MongoClient, ObjectId } from 'mongodb';
 
 const uri = process.env.MONGODB_URI;
-const dbName = 'biopore-mapping';
-const collectionName = 'biopori';
 
-let client;
-
-async function connectToDatabase() {
-  if (!client) {
-    client = new MongoClient(uri);
-    await client.connect();
-  }
-  return client.db(dbName).collection(collectionName);
+if (!uri) {
+  throw new Error('MONGODB_URI environment variable is not defined');
 }
 
-export default async function handler(req, res) {
+let cachedClient: any = null;
+
+async function connectToDatabase() {
+  if (cachedClient) {
+    return cachedClient.db('biopore-mapping').collection('biopori');
+  }
+
+  const client = new MongoClient(uri, {
+    maxPoolSize: 10,
+    minPoolSize: 1,
+  });
+
+  await client.connect();
+  cachedClient = client;
+  return client.db('biopore-mapping').collection('biopori');
+}
+
+export default async function handler(req: any, res: any) {
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization'
+  );
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   try {
     const collection = await connectToDatabase();
 
     if (req.method === 'GET') {
       const biopori = await collection.find({}).toArray();
-      res.status(200).json(biopori);
+      return res.status(200).json(biopori);
     } else if (req.method === 'POST') {
-      // Basic auth check
       const authHeader = req.headers.authorization;
       if (authHeader !== "Bearer admin-secret-123") {
         return res.status(401).json({ error: "Unauthorized" });
@@ -42,9 +63,8 @@ export default async function handler(req, res) {
       };
 
       const result = await collection.insertOne(newPoint);
-      res.status(201).json({ ...newPoint, _id: result.insertedId });
+      return res.status(201).json({ ...newPoint, _id: result.insertedId });
     } else if (req.method === 'DELETE') {
-      // Basic auth check
       const authHeader = req.headers.authorization;
       if (authHeader !== "Bearer admin-secret-123") {
         return res.status(401).json({ error: "Unauthorized" });
@@ -60,13 +80,16 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: "Point not found" });
       }
 
-      res.status(200).json({ message: "Point deleted" });
+      return res.status(200).json({ message: "Point deleted" });
     } else {
       res.setHeader('Allow', ['GET', 'POST', 'DELETE']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+      return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('API Error:', error);
+    return res.status(500).json({ 
+      error: 'Internal Server Error',
+      message: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 }
