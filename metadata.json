@@ -1,0 +1,8 @@
+{
+  "name": "Biopori Desa Monitoring",
+  "description": "Sistem monitoring lubang biopori desa untuk mitigasi banjir di kawasan sungai. Menampilkan titik koordinat biopori pada peta interaktif bagi masyarakat dan admin.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": []
+}
