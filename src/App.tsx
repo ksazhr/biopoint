@@ -347,7 +347,7 @@ export default function App() {
         
         {/* Sidebar */}
         <AnimatePresence>
-          {(view === 'list' || isAdmin) && (
+          {(view === 'list') && (
             <motion.aside 
               initial={{ x: -320 }}
               animate={{ x: 0 }}
